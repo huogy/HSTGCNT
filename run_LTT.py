@@ -12,8 +12,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 matrix_path = "dataset/W_228.csv"
 data_path = "dataset/V_228.csv"
-save_path = "save/model_Tae.pt"
-save_path_AE = "save/AE_model1.pt"
+save_path_AE = "save/AE_model15.pt"
 
 day_slot = 288
 n_train, n_val, n_test = 34, 5, 5

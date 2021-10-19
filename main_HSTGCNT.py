@@ -5,14 +5,14 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from load_data import *
 from utils import *
-from STGCNT import *
+from HSTGCNT import *
 import tqdm
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 matrix_path = "dataset/W_228.csv"
 data_path = "dataset/V_228.csv"
-save_path = "save/modelSTGCNT15.pt"
+save_path = "save/modelHSTGCNT15.pt"
 save_path_AE = "save/AE_model1.pt"
 
 day_slot = 288
@@ -66,7 +66,7 @@ test_iter = torch.utils.data.DataLoader(test_data, batch_size)
 
 loss = nn.MSELoss()
 loss2 = nn.L1Loss()
-model = STTEGCN(Ks, Kt, blocks, n_his, n_route, Lk, drop_prob,d_input,d_model,d_output, q, v, h, N, attention_size=attention_size, dropout=dropout, chunk_mode=chunk_mode, pe=pe, AEpath=save_path_AE).to(device)
+model = HSTGCNT(Ks, Kt, blocks, n_his, n_route, Lk, drop_prob,d_input,d_model,d_output, q, v, h, N, attention_size=attention_size, dropout=dropout, chunk_mode=chunk_mode, pe=pe, AEpath=save_path_AE).to(device)
 optimizer = torch.optim.RMSprop(model.parameters(), lr=lr)
 
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.7)

@@ -151,7 +151,7 @@ class output_layer(nn.Module):
         x_t2 = self.tconv2(x_ln)
         return self.fc(x_t2)
 
-class STTEGCN(nn.Module):
+class HSTGCNT(nn.Module):
     def __init__(self, ks, kt, bs, T, n, Lk, p,d_input,d_model,d_output, q, v, h, N, attention_size, dropout, chunk_mode, pe,AEpath):
         super(STTEGCN, self).__init__()
         self.st_conv1 = st_conv_block1(ks, kt, n, bs[0], p, Lk)

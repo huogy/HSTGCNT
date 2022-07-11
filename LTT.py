@@ -25,7 +25,7 @@ class temporal_transformer(nn.Module):
                  dropout: float = 0.3,
                  chunk_mode: str = 'window',
                  pe: str = None,
-                 pe_period: int = 24):
+                 pe_period: int = 6):
         """Create transformer structure from Encoder and Decoder blocks."""
         super().__init__()
 
@@ -85,7 +85,7 @@ class temporal_transformer(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
 
-        x = x.permute(0, 3, 2, 1)  #only for stgcnt
+        x = x.permute(0, 3, 2, 1)  #only for hstgcnt
         K = x.shape[2]
 
         # Embeddin module

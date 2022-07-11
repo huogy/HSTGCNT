@@ -6,8 +6,6 @@ import torch.nn.functional as F
 from tst.encoder import Encoder
 from tst.decoder import Decoder
 from tst.utils import generate_original_PE, generate_regular_PE
-from model.embedding.bert import BERTEmbedding
-from model.transformer import TransformerBlock
 
 
 
@@ -25,7 +23,9 @@ class temporal_transformer(nn.Module):
                  dropout: float = 0.3,
                  chunk_mode: str = 'window',
                  pe: str = None,
-                 pe_period: int = 6):
+                 # pe_period: str = None
+                 pe_period: int = 6
+                 ):
         """Create transformer structure from Encoder and Decoder blocks."""
         super().__init__()
 
@@ -66,6 +66,7 @@ class temporal_transformer(nn.Module):
 
         self._embedding = nn.Linear(d_input, d_model)
         self._linear = nn.Linear(d_model, d_output)
+        # self.final_onv = nn.Conv2d(325, 325, (12, 1), 1)
         self.final_onv = nn.Conv2d(228, 228, (12, 1), 1)
         pe_functions = {
             'original': generate_original_PE,
@@ -85,7 +86,7 @@ class temporal_transformer(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
 
-        x = x.permute(0, 3, 2, 1)  #only for hstgcnt
+        #x = x.permute(0, 3, 2, 1)  #only for stgcnt
         K = x.shape[2]
 
         # Embeddin module
